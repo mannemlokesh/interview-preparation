@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 interface Employee {
-    void showDetails();
+    void showDetails(String indent);
 }
 
 class Developer implements Employee {
@@ -13,8 +13,8 @@ class Developer implements Employee {
         this.name = name;
     }
     
-    public void showDetails() {
-        System.out.println("Developer :: " + name);
+    public void showDetails(String indent) {
+        System.out.println(indent + "Developer :: " + name);
     }
 }
 
@@ -31,11 +31,11 @@ class Manager implements Employee {
         team.add(employee);
     }
     
-    public void showDetails() {
+    public void showDetails(String indent) {
         
-        System.out.println("Manager :: " + name);
+        System.out.println(indent + "Manager :: " + name);
         for(Employee emp : team) {
-            emp.showDetails();
+            emp.showDetails(indent + "  ");
         }
     }
 }
@@ -50,7 +50,8 @@ public class Composite {
         Manager manager = new Manager("Ram");
         manager.add(d1);
         manager.add(d2);
-        
-        manager.showDetails();
+        Manager manager2 = new Manager("Vignesh");
+        manager2.add(manager);
+        manager2.showDetails("");
     }
 }
