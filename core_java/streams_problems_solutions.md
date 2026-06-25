@@ -357,13 +357,82 @@ public class Main {
 ## Problem 11
 ### Find highest-paid employee in each department.
 ```java
+import java.util.*;
+import java.util.stream.Collectors;
 
+class Employee {
+    int id;
+    String name;
+    double salary;
+    String department;
+
+    Employee(int id, String name, double salary, String department) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.department = department;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - " + salary;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        List<Employee> employees = Arrays.asList(
+            new Employee(1, "Alice", 60000, "IT"),
+            new Employee(2, "Bob", 50000, "HR"),
+            new Employee(3, "Charlie", 75000, "IT"),
+            new Employee(4, "David", 45000, "Finance"),
+            new Employee(5, "Eve", 55000, "HR")
+        );
+
+        Map<String, Optional<Employee>> highestPaidByDept =
+                employees.stream()
+                        .collect(Collectors.groupingBy(
+                                emp -> emp.department,
+                                Collectors.maxBy(
+                                        Comparator.comparingDouble(emp -> emp.salary)
+                                )
+                        ));
+
+        highestPaidByDept.forEach((dept, emp) ->
+                System.out.println(dept + " -> " + emp.get()));
+    }
+}
 ```
 
 ## Problem 12
 ### Find frequency of each word.
 ```java
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
 
+import java.util.*;
+import java.util.stream.*;
+
+class Main {
+    public static void main(String[] args) {
+        List<String> words = Arrays.asList(
+                "apple", "banana", "apple",
+                "orange", "banana", "apple"
+        );
+        
+        
+        Map<String, Long> map = words.stream()
+        .collect(
+            Collectors.groupingBy(
+                word -> word,
+                Collectors.counting()
+            )
+        );
+        
+        
+        System.out.println(map);
+    }
+}
 ```
 
 ## Problem 13
