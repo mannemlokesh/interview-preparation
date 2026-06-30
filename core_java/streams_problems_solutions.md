@@ -438,7 +438,40 @@ class Main {
 ## Problem 13
 ### Find first non-repeated character.
 ```java
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
 
+import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+
+class Main {
+    public static void main(String[] args) {
+        String input = "stress";
+        
+        
+        Character c = input.chars()
+        .mapToObj(obj -> (char) obj)
+        .collect(
+            Collectors.groupingBy(
+                // obj-> obj, 
+                Function.identity(), 
+                LinkedHashMap::new, 
+                Collectors.counting()
+            )
+        )
+        .entrySet()
+        .stream()
+        .filter(obj -> obj.getValue() == 1)
+        // .map(Map.Entry::getKey)
+        .map(obj -> obj.getKey())
+        .findFirst()
+        .orElse(null);
+        
+        
+        System.out.println(c);
+    }
+}
 ```
 
 ## Problem 14
