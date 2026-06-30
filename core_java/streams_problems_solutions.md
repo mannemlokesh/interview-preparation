@@ -656,7 +656,51 @@ public class Main {
 ## Problem 17
 ### Find all unique skills possessed by employees.
 ```java
+import java.util.Arrays;
+import java.util.List;
 
+public class Main {
+
+    static class Employee {
+        private String name;
+        private List<String> skills;
+
+        Employee(String name, List<String> skills) {
+            this.name = name;
+            this.skills = skills;
+        }
+
+        public List<String> getSkills() {
+            return skills;
+        }
+
+        @Override
+        public String toString() {
+            return name + " : " + skills;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        List<Employee> employees = Arrays.asList(
+                new Employee("John",
+                        Arrays.asList("Java", "Spring", "SQL")),
+
+                new Employee("Alice",
+                        Arrays.asList("Java", "React")),
+
+                new Employee("Bob",
+                        Arrays.asList("SQL", "Docker", "AWS"))
+        );
+
+        List<String> uniqueSkills = employees.stream()
+                .flatMap(emp -> emp.getSkills().stream())
+                .distinct()
+                .toList();
+
+        System.out.println(uniqueSkills);
+    }
+}
 ```
 
 ## Problem 18
