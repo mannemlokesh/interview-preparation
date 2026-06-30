@@ -477,7 +477,25 @@ class Main {
 ## Problem 14
 ### Find first repeated character.
 ```java
+import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
 
+class Main {
+    public static void main(String[] args) {
+        String input = "programming";
+        
+        Set<Character> seen = new HashSet<Character>();
+        
+        Character c = input.chars()
+        .mapToObj(e -> (char) e)
+        .filter(e -> !seen.add(e))
+        .findFirst()
+        .orElse(null);
+        
+        System.out.println(c);
+    }
+}
 ```
 
 ## Problem 15
