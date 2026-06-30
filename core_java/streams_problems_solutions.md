@@ -501,13 +501,156 @@ class Main {
 ## Problem 15
 ### Find second highest salary employee.
 ```java
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
+public class Main {
+
+    static class Employee {
+        private String name;
+        private double salary;
+
+        Employee(String name, double salary) {
+            this.name = name;
+            this.salary = salary;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getSalary() {
+            return salary;
+        }
+
+        @Override
+        public String toString() {
+            return name + " - " + salary;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        List<Employee> employees = Arrays.asList(
+                new Employee("John", 90000),
+                new Employee("Alice", 90000),
+                new Employee("Bob", 80000),
+                new Employee("David", 70000),
+                new Employee("Emma", 60000)
+        );
+
+        System.out.println("Employees:");
+        employees.forEach(System.out::println);
+
+        // --------------------------------------------------
+        // 1. Second highest employee (skip first employee)
+        // --------------------------------------------------
+        Employee secondEmployee = employees.stream()
+                .sorted(Comparator.comparing(Employee::getSalary).reversed())
+                .skip(1)
+                .findFirst()
+                .orElse(null);
+
+        System.out.println("\nSecond employee after sorting:");
+        System.out.println(secondEmployee);
+
+        // --------------------------------------------------
+        // 2. Second highest DISTINCT salary
+        // --------------------------------------------------
+        Double secondHighestSalary = employees.stream()
+                .map(Employee::getSalary)
+                .distinct()
+                .sorted(Comparator.reverseOrder())
+                .skip(1)
+                .findFirst()
+                .orElse(null);
+
+        System.out.println("\nSecond highest distinct salary:");
+        System.out.println(secondHighestSalary);
+
+        // --------------------------------------------------
+        // 3. Employees having second highest salary
+        // --------------------------------------------------
+        List<Employee> secondHighestEmployees = employees.stream()
+                .filter(e -> e.getSalary() == secondHighestSalary)
+                .toList();
+
+        System.out.println("\nEmployees with second highest salary:");
+        secondHighestEmployees.forEach(System.out::println);
+    }
+}
 ```
 
 ## Problem 16
 ### Get all employees from all departments.
 ```java
+import java.util.Arrays;
+import java.util.List;
 
+public class Main {
+
+    static class Employee {
+        private String name;
+
+        Employee(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
+    static class Department {
+        private String name;
+        private List<Employee> employees;
+
+        Department(String name, List<Employee> employees) {
+            this.name = name;
+            this.employees = employees;
+        }
+
+        public List<Employee> getEmployees() {
+            return employees;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Department it = new Department(
+                "IT",
+                Arrays.asList(
+                        new Employee("John"),
+                        new Employee("Alice")
+                )
+        );
+
+        Department hr = new Department(
+                "HR",
+                Arrays.asList(
+                        new Employee("Bob"),
+                        new Employee("David")
+                )
+        );
+
+        Department finance = new Department(
+                "Finance",
+                Arrays.asList(
+                        new Employee("Emma")
+                )
+        );
+
+        List<Department> departments = Arrays.asList(it, hr, finance);
+
+        List<Employee> allEmployees = departments.stream()
+                .flatMap(department -> department.getEmployees().stream())
+                .toList();
+
+        System.out.println(allEmployees);
+    }
+}
 ```
 
 ## Problem 17
