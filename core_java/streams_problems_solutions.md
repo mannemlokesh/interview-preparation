@@ -758,13 +758,105 @@ class Main {
 ## Problem 19
 ### Find total salary expenditure department-wise.
 ```java
+import java.util.*;
+import java.util.stream.*;
 
+class Employee {
+    private String name;
+    private String dept;
+    private double salary;
+
+    public Employee(String name, String dept, double salary) {
+        this.name = name;
+        this.dept = dept;
+        this.salary = salary;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        List<Employee> employees = List.of(
+                new Employee("Alice", "IT", 70000),
+                new Employee("Bob", "IT", 80000),
+                new Employee("Charlie", "HR", 50000),
+                new Employee("David", "HR", 60000),
+                new Employee("Eva", "Finance", 90000)
+        );
+
+        
+        // Find total salary expenditure department-wise.
+        Map<String, Double> map = employees.stream()
+        .collect(
+            Collectors.groupingBy(
+                emp -> emp.getDept(),
+                Collectors.summingDouble(emp -> emp.getSalary())
+            )
+        );
+        
+        
+        System.out.println(map);
+    }
+}
 ```
 
 ## Problem 20
 ### Find employee names department-wise.
 ```java
+import java.util.*;
+import java.util.stream.Collectors;
 
+class Employee {
+    private String name;
+    private String dept;
+
+    public Employee(String name, String dept) {
+        this.name = name;
+        this.dept = dept;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        List<Employee> employees = List.of(
+                new Employee("Alice", "IT"),
+                new Employee("Bob", "IT"),
+                new Employee("Charlie", "HR"),
+                new Employee("David", "HR"),
+                new Employee("Eva", "Finance")
+        );
+
+        
+        Map<String, List<String>> map = employees.stream()
+        .collect(
+            Collectors.groupingBy(
+                emp -> emp.getDept(),
+                Collectors.mapping(
+                    emp -> emp.getName(),
+                    Collectors.toList()
+                )
+            )
+        );
+        
+        
+        System.out.println(map);
+    }
+}
 ```
 
 ## Problem 21
