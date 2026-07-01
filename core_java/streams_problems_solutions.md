@@ -862,7 +862,50 @@ class Main {
 ## Problem 21
 ### Partition employees based on salary > 50000.
 ```java
+import java.util.*;
+import java.util.stream.Collectors;
 
+class Employee {
+    private String name;
+    private double salary;
+
+    public Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        List<Employee> employees = List.of(
+                new Employee("Alice", 70000),
+                new Employee("Bob", 45000),
+                new Employee("Charlie", 60000),
+                new Employee("David", 40000),
+                new Employee("Eva", 90000)
+        );
+
+        
+        Map<Boolean, List<Employee>> map = employees.stream()
+        .collect(
+            Collectors.partitioningBy(
+                emp -> emp.getSalary() > 50000
+            )
+        );
+        
+        
+        System.out.println(map);
+    }
+}
 ```
 
 ## Problem 22
