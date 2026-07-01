@@ -407,9 +407,6 @@ public class Main {
 ## Problem 12
 ### Find frequency of each word.
 ```java
-// Online Java Compiler
-// Use this editor to write, compile and run your Java code online
-
 import java.util.*;
 import java.util.stream.*;
 
@@ -438,9 +435,6 @@ class Main {
 ## Problem 13
 ### Find first non-repeated character.
 ```java
-// Online Java Compiler
-// Use this editor to write, compile and run your Java code online
-
 import java.util.*;
 import java.util.stream.*;
 import java.util.function.*;
@@ -706,7 +700,59 @@ public class Main {
 ## Problem 18
 ### Group employees by department and then by designation.
 ```java
+import java.util.*;
+import java.util.stream.Collectors;
 
+class Employee {
+    private String name;
+    private String dept;
+    private String designation;
+
+    public Employee(String name, String dept, String designation) {
+        this.name = name;
+        this.dept = dept;
+        this.designation = designation;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        List<Employee> employees = List.of(
+                new Employee("Alice", "IT", "Developer"),
+                new Employee("Bob", "IT", "Developer"),
+                new Employee("Charlie", "IT", "Manager"),
+                new Employee("David", "HR", "Recruiter"),
+                new Employee("Eva", "HR", "Manager")
+        );
+        
+        // Group employees by department and then by designation.
+        
+        Map<String, Map<String, List<Employee>>> map = employees.stream()
+        .collect(
+            Collectors.groupingBy(
+                emp -> emp.getDept(),
+                Collectors.groupingBy(
+                    empolyee -> empolyee.getDesignation()
+                )
+            )
+        );
+        
+        System.out.println(map);
+    }
+}
 ```
 
 ## Problem 19
