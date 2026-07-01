@@ -911,25 +911,148 @@ class Main {
 ## Problem 22
 ### Find the longest string in a list.
 ```java
+import java.util.*;
+import java.util.stream.Collectors;
 
+class Main {
+    public static void main(String[] args) {
+        
+        List<String> words = List.of(
+                "Java",
+                "Stream",
+                "Programming",
+                "API",
+                "Collectors"
+        );
+        
+        Optional<String>  wor = words.stream()
+        .max(Comparator.comparing(word -> word.length()));
+        
+        
+        System.out.println(wor);
+    }
+}
 ```
 
 ## Problem 23
 ### Find the employee with maximum salary.
 ```java
+import java.util.*;
+import java.util.stream.Collectors;
 
+class Employee {
+    private String name;
+    private double salary;
+
+    public Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + salary + ")";
+    }
+}
+
+
+class Main {
+    public static void main(String[] args) {
+        
+        List<Employee> employees = List.of(
+                new Employee("Alice", 70000),
+                new Employee("Bob", 45000),
+                new Employee("Charlie", 90000),
+                new Employee("David", 60000)
+        );
+        
+        Optional<Employee> highestPaid =
+                employees.stream()
+                         .max(Comparator.comparing(Employee::getSalary));
+
+        highestPaid.ifPresent(System.out::println);
+    }
+}
 ```
 
 ## Problem 24
 ### Find the sum of salaries.
 ```java
+import java.util.*;
 
+class Employee {
+    private String name;
+    private double salary;
+
+    public Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        List<Employee> employees = List.of(
+                new Employee("Alice", 70000),
+                new Employee("Bob", 45000),
+                new Employee("Charlie", 90000),
+                new Employee("David", 60000)
+        );
+
+        double totalSalary = employees.stream()
+                                      .mapToDouble(Employee::getSalary)
+                                      .sum();
+
+        System.out.println(totalSalary);
+    }
+}
 ```
 
 ## Problem 25
 ### Check if all employees belong to the same department.
 ```java
+import java.util.*;
 
+class Employee {
+    private String name;
+    private String dept;
+
+    public Employee(String name, String dept) {
+        this.name = name;
+        this.dept = dept;
+    }
+
+    public String getDept() {
+        return dept;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        List<Employee> employees = List.of(
+                new Employee("Alice", "IT"),
+                new Employee("Bob", "IT"),
+                new Employee("Charlie", "IT")
+        );
+
+        String department = employees.get(0).getDept();
+
+        boolean sameDepartment = employees.stream()
+                .allMatch(employee -> employee.getDept().equals(department));
+
+        System.out.println(sameDepartment);
+    }
+}
 ```
 
 ## Problem 26
